@@ -1,0 +1,1 @@
+/home/alejandro/Escritorio/FACULTAD/Paradigmas\ de\ programacion/paradigmas-de-programacion/Proyecto_lenguajes_multiparadigmas/dsl_petri_net/target/debug/libdsl_petri_net.rlib: /home/alejandro/Escritorio/FACULTAD/Paradigmas\ de\ programacion/paradigmas-de-programacion/Proyecto_lenguajes_multiparadigmas/dsl_petri_net/src/lib.rs
