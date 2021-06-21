@@ -7,10 +7,39 @@ struct Plaza {
     num_tokens : i32
 }
 
+/*
+impl Plaza {
+    fn set_num_tokens() {
+
+    }
+}*/
+
 #[derive(Debug)]
 struct Transicion {
     nombre : String,
     is_sensibilizada : bool
+}
+
+/*
+/// Arco que van de una plaza P a transicion T
+#[derive(Debug)]
+struct ArcoPre {
+    plaza : Plaza,
+    transicion : Transicion
+}
+
+/// Arco que van de una transicion T a una plaza P
+#[derive(Debug)]
+struct ArcoPost {
+    transicion : Transicion,
+    plaza : Plaza
+}*/
+
+/// Arco que va de una plaza P a una transicion T o viceversa
+#[derive(Debug)]
+struct Arco {
+    plaza : Plaza,
+    transicion : Transicion
 }
 
 //define place piensa1,piensa2,,,piensan;    //esta es la instruccion de definicion de plazas
@@ -46,18 +75,47 @@ macro_rules! transition {
 }
 
 //define arc piensa1 to empieza1, comiendo1 to piensa1;  // esta es la instruccion de definicion de arcos
+#[macro_export]
+macro_rules! arc_pre {
 
+    ($($p:ident $t:expr),*) => {
+        
+        {
+            println!("plaza {:?}", $p);
+            println!("transicon {:?}", $t);
+        }
+    };
+
+}
+
+//define arc piensa1 to empieza1, comiendo1 to piensa1;  // esta es la instruccion de definicion de arcos
+#[macro_export]
+macro_rules! arc_post {
+
+    ($($p:ident to $t:expr),*) => {
+        /*
+        {
+            println!("plaza {:?}", $p);
+            println!("transicon {:?}", $t);
+        }*/
+    };
+
+   /* ($($t: ident to $p: ident),*) => {
+        {
+            println!("transicon {:?}", $t);
+            println!("plaza {:?}", $p);
+        }
+    };*/
+}
 
 //define init piensa1{1},,,piensan{0}   // definicion del marcado inicial donde {n} indican la cantidad de tokens en la plaza respectiva
 #[macro_export]
 macro_rules! init {
-    //() => { //marcado por defecto};
 
     ($($plaza: ident{$num: expr}),*) => {
        {
            $(
-                println!("{:?}", $plaza);
-                println!("{:?}", $num);
+               $plaza.num_tokens = $num;
            )+
        }
     };
@@ -70,21 +128,45 @@ fn main() {
     println!("{:?}", a);
     let b = transition!("t1", "t2");
     println!("{:?}", b);
+    //let arc1 = arc_pre!(p2 to t2);
 
-    let p1 = &a[0];
-    let p2 = &a[1];
+    let mut p1 = Plaza {nombre : "juan".to_string(), num_tokens : 0};
+    let mut p2 = Plaza {nombre : "pepe".to_string(), num_tokens : 0};
     init!(p1{1}, p2{3});
+    println!("{:?}", p1);
+    println!("{:?}", p2);
+    let mut t2 = Transicion {nombre : "t2".to_string(), is_sensibilizada : false};
+    //let arc1 = arc!(p2 to t2);
+    let mut arc1 = arc_pre!(p2 t2);
 
     //Interaccion con el usuario - recepcion de comandos
+    let finalizo : bool = false;
+   // let mut input_comando = String::new();
     println!("\x1b[1;36m >> Bienvenidos a Petri Net Simulator << \x1b[0;37m");
-    print!("Ingrese un comando: ");
-    io::stdout().flush().ok();
+    /*while !finalizo {
+           println!("Seleccione una acción a realizar");
+           println!(" 1) Disparar transicion empiezan");
+           println!(" 2) Disparar una transicion al azar");
+           println!(" 3) Disparar todas las transiciones habilitadas");
+           println!(" 4) Mostrar el marcado actual");
+           println!(" 5) Mostrar transiciones habilitadas");
+           println!(" 6) Finalizar");
+           print!("{} >> ", '\u{1F980}');
+           io::stdout().flush().ok();
 
-    
+           let mut input_comando = String::new();
+           io::stdin().read_line(&mut input_comando).ok().expect("Error al leer de teclado");
+          // println!("El comando es {}", input_comando.trim()); //trim quita el \n final 
+           match input_comando.trim() {
+               "1" => println!("uno"),
+               "2" => println!("dos"),
+               "3" => println!("tres"),
+               "4" => println!("cuatro"),
+               "5" => println!("cinco"),
+               "6" => break,
+               _ => println!("\x1b[1;31m Opcion incorrecta \x1b[0;37m")
+           }
+    }*/
 
-    /*
-    let mut input_comando = String::new();
-    io::stdin().read_line(&mut input_comando).ok().expect("Error al leer de teclado");
-    println!("El comando es {}", input_comando.trim()); //trim quita el \n final 
-    */
+
 }
