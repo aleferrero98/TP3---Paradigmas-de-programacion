@@ -108,6 +108,25 @@ macro_rules! arc_post {
     };*/
 }
 
+#[macro_export]
+macro_rules! list_enabled {
+    ($transiciones: ident) => {
+        for transicion in &$transiciones{
+            println!("Transicion {} {}",transicion.nombre, if(transicion.is_sensibilizada){"-> sensibilizada"}else{"-> no sensibilizada"})
+        }
+    }
+
+}
+
+#[macro_export]
+macro_rules! update_enabled {
+    ($transiciones: ident) => {
+        for i in (0..$transiciones.len()){
+            $transiciones[i].is_sensibilizada = true;
+        }
+    }
+}
+
 //define init piensa1{1},,,piensan{0}   // definicion del marcado inicial donde {n} indican la cantidad de tokens en la plaza respectiva
 #[macro_export]
 macro_rules! init {
@@ -126,7 +145,7 @@ fn main() {
     //creacion e inicializacion de la RdP
     let a = place!("pensando", "comiendo");
     println!("{:?}", a);
-    let b = transition!("t1", "t2");
+    let mut b = transition!("t1", "t2");
     println!("{:?}", b);
     //let arc1 = arc_pre!(p2 to t2);
 
@@ -136,8 +155,11 @@ fn main() {
     println!("{:?}", p1);
     println!("{:?}", p2);
     let mut t2 = Transicion {nombre : "t2".to_string(), is_sensibilizada : false};
+    list_enabled!(b);
+    update_enabled!(b);
+    list_enabled!(b);
     //let arc1 = arc!(p2 to t2);
-    let mut arc1 = arc_pre!(p2 t2);
+    // let mut arc1 = arc_pre!(p2 t2);
 
     //Interaccion con el usuario - recepcion de comandos
     let finalizo : bool = false;
