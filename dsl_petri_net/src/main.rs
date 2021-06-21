@@ -77,12 +77,14 @@ macro_rules! transition {
 //define arc piensa1 to empieza1, comiendo1 to piensa1;  // esta es la instruccion de definicion de arcos
 #[macro_export]
 macro_rules! arc_pre {
-
-    ($($p:ident $t:expr),*) => {
-        
+    ($($p:ident to $t:ident),+) => {
         {
-            println!("plaza {:?}", $p);
-            println!("transicon {:?}", $t);
+            let mut arcos_pre : Vec<Arco> = Vec::new();
+            $(
+                let arc = Arco {plaza : $p, transicion : $t};
+                arcos_pre.push(arc);
+            )+
+            arcos_pre
         }
     };
 
@@ -91,21 +93,16 @@ macro_rules! arc_pre {
 //define arc piensa1 to empieza1, comiendo1 to piensa1;  // esta es la instruccion de definicion de arcos
 #[macro_export]
 macro_rules! arc_post {
-
-    ($($p:ident to $t:expr),*) => {
-        /*
+    ($($t:ident to $p:ident),+) => {
         {
-            println!("plaza {:?}", $p);
-            println!("transicon {:?}", $t);
-        }*/
-    };
-
-   /* ($($t: ident to $p: ident),*) => {
-        {
-            println!("transicon {:?}", $t);
-            println!("plaza {:?}", $p);
+            let mut arcos_post : Vec<Arco> = Vec::new();
+            $(
+                let arc = Arco {plaza : $p, transicion : $t};
+                arcos_post.push(arc);
+            )+
+            arcos_post
         }
-    };*/
+    };
 }
 
 #[macro_export]
@@ -131,7 +128,7 @@ macro_rules! update_enabled {
 #[macro_export]
 macro_rules! init {
 
-    ($($plaza: ident{$num: expr}),*) => {
+    ($($plaza: ident{$num: expr}),+) => {
        {
            $(
                $plaza.num_tokens = $num;
@@ -152,6 +149,7 @@ fn main() {
     let mut p1 = Plaza {nombre : "juan".to_string(), num_tokens : 0};
     let mut p2 = Plaza {nombre : "pepe".to_string(), num_tokens : 0};
     init!(p1{1}, p2{3});
+    init!(p1{4});
     println!("{:?}", p1);
     println!("{:?}", p2);
     let mut t2 = Transicion {nombre : "t2".to_string(), is_sensibilizada : false};
@@ -159,7 +157,9 @@ fn main() {
     update_enabled!(b);
     list_enabled!(b);
     //let arc1 = arc!(p2 to t2);
-    // let mut arc1 = arc_pre!(p2 t2);
+     let mut arc1 = arc_pre!(p2 to t2);
+     println!("ARCOS {:?}", arc1);
+
 
     //Interaccion con el usuario - recepcion de comandos
     let finalizo : bool = false;
