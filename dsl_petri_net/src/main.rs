@@ -159,6 +159,16 @@ macro_rules! update_enabled {
 }
 
 #[macro_export]
+macro_rules! list_marc {
+    ($plazas: ident) => {
+        for plaza in &$plazas{
+            println!("Plaza {} {}",plaza.nombre, plaza.num_tokens)
+        }
+    }
+
+}
+
+#[macro_export]
 macro_rules! list_enabled {
     ($transiciones: ident) => {
         for transicion in &$transiciones{
@@ -263,6 +273,7 @@ fn main() {
     list_enabled!(vec_transiciones);
     update_enabled!(vec_plazas vec_transiciones arcos_pre);
     list_enabled!(vec_transiciones);
+    list_marc!(vec_plazas);
 
 
 
