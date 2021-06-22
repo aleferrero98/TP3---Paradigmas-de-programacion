@@ -196,34 +196,71 @@ macro_rules! fire_any {
 /// El matcheo es viendo el nombre de las plazas y transicion.
 #[macro_export]
 macro_rules! fire_transition {
-    ($plazas: ident, $transicion: ident, $arc_pre : ident, $arc_post : ident) => {
+    ($plazas: ident, $transicion: ident, $arc_pres : ident, $arc_post : ident) => {
         {
-            for i in (0..$arc_pre.len()){
-                if $arc_pre[i].transicion.nombre == $transicion.nombre {
-                    for j in (0..$plazas.len()){
-                        if $arc_pre[i].plaza.nombre == $plazas[j].nombre {
-                            $plazas[j].num_tokens -= 1;
-                            println!("saco en plaza {}", $plazas[j].nombre);
-                            break;
-                        }
-                    }
+            // for i in (0..$arc_pres.len()){
+            //     if $arc_pres[i].transicion.nombre == $transicion.nombre {
+            //         for j in (0..$plazas.len()){
+            //             if $arc_pres[i].plaza.nombre == $plazas[j].nombre {
+            //                 $plazas[j].num_tokens -= 1;
+            //                 println!("saco en plaza {}", $plazas[j].nombre);
+            //                 break;
+            //             }
+            //         }
+            //     }
+            // }
+            for i in (0..$arc_pres.len()){
+                if ($arc_pres[i].transicion.nombre == $transicion.nombre) {
+                    let iplaza = $arc_pres[i].plaza.orden;
+                    $plazas[iplaza].num_tokens -= 1;
+                    println!("saco en plaza {}", $plazas[iplaza].nombre);
                 }
             }
 
+            // for k in (0..$arc_post.len()){
+            //     if $arc_post[k].transicion.nombre == $transicion.nombre {
+            //         for l in (0..$plazas.len()){
+            //             if $arc_post[k].plaza.nombre == $plazas[l].nombre {
+            //                 $plazas[l].num_tokens += 1;
+            //                 println!("pongo en plaza {}", $plazas[l].nombre);
+            //                 break;
+            //             }
+            //         }
+            //     }
+            // }
+
             for k in (0..$arc_post.len()){
                 if $arc_post[k].transicion.nombre == $transicion.nombre {
-                    for l in (0..$plazas.len()){
-                        if $arc_post[k].plaza.nombre == $plazas[l].nombre {
-                            $plazas[l].num_tokens += 1;
-                            println!("pongo en plaza {}", $plazas[l].nombre);
-                            break;
-                        }
-                    }
+                    let iplaza = $arc_pres[k].plaza.orden;
+                    $plazas[iplaza].num_tokens += 1;
+                    println!("pongo en plaza {}", $plazas[iplaza].nombre);
                 }
             }
+            println!("Se disparo la transicion {}", $transicion.nombre);
         }
     };
 }
+
+//fire all   // dispara todas la transiciones que esten habilitadas en ese momento
+#[macro_export]
+macro_rules! fire_all {
+    ($plazas: ident, $transiciones: ident, $arc_pre : ident, $arc_post : ident) => {
+        {
+            let vec_trans = &$transiciones;
+            let sensibilizadas = list_enabled2!(vec_trans);
+            for i in (0..sensibilizadas.len()){ 
+                let t = sensibilizadas[i].clone();
+                if($transiciones[t.orden].is_sensibilizada == true){
+                    fire_transition!($plazas, t, $arc_pre, $arc_post);
+                }
+                update_enabled!($plazas $transiciones $arc_pre);
+            }
+
+        }
+
+    };
+}
+
 
 fn main() {
     //creacion e inicializacion de la RdP
@@ -317,6 +354,8 @@ fn main() {
    fire_transition!(vec_plazas, t, arcos_pre, arcos_post);*/
    update_enabled!(vec_plazas vec_transiciones arcos_pre);
    list_enabled!(vec_transiciones);
+
+   fire_all!(vec_plazas, vec_transiciones, arcos_pre, arcos_post);
 
 
 
