@@ -201,12 +201,12 @@
 <value>0</value>
 </capacity>
 </place>
-<place id="tenedor0">
+<place id="tenedor1">
 <graphics>
 <position x="360.0" y="165.0"/>
 </graphics>
 <name>
-<value>tenedor0</value>
+<value>tenedor1</value>
 <graphics>
 <offset x="7.857142857142857" y="1.4285714285714282"/>
 </graphics>
@@ -221,12 +221,12 @@
 <value>0</value>
 </capacity>
 </place>
-<place id="tenedor1">
+<place id="tenedor2">
 <graphics>
 <position x="600.0" y="165.0"/>
 </graphics>
 <name>
-<value>tenedor1</value>
+<value>tenedor2</value>
 <graphics>
 <offset x="57.46411483253587" y="-4.883800410116199"/>
 </graphics>
@@ -241,12 +241,12 @@
 <value>0</value>
 </capacity>
 </place>
-<place id="tenedor2">
+<place id="tenedor3">
 <graphics>
 <position x="735.0" y="525.0"/>
 </graphics>
 <name>
-<value>tenedor2</value>
+<value>tenedor3</value>
 <graphics>
 <offset x="81.10047846889947" y="23.492822966507187"/>
 </graphics>
@@ -261,12 +261,12 @@
 <value>0</value>
 </capacity>
 </place>
-<place id="tenedor3">
+<place id="tenedor4">
 <graphics>
 <position x="480.0" y="510.0"/>
 </graphics>
 <name>
-<value>tenedor3</value>
+<value>tenedor4</value>
 <graphics>
 <offset x="44.48051948051951" y="-16.23376623376623"/>
 </graphics>
@@ -281,14 +281,14 @@
 <value>0</value>
 </capacity>
 </place>
-<place id="tenedor 4">
+<place id="tenedor 5">
 <graphics>
 <position x="240.0" y="510.0"/>
 </graphics>
 <name>
-<value>tenedor 4</value>
+<value>tenedor 5</value>
 <graphics>
-<offset x="-5.714285714285714" y="22.85714285714286"/>
+<offset x="-2.7142857142857153" y="31.85714285714286"/>
 </graphics>
 </name>
 <initialMarking>
@@ -381,7 +381,7 @@
 </transition>
 <transition id="empezar_comer4">
 <graphics>
-<position x="374.99999999999994" y="465.00000000000006"/>
+<position x="375.0" y="465.0"/>
 </graphics>
 <name>
 <value>empezar_comer4</value>
@@ -584,7 +584,7 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="754" y="280" curvePoint="false"/>
-<arcpath id="001" x="730" y="321" curvePoint="false"/>
+<arcpath id="001" x="731" y="321" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="empezar_comer2 to comiendo2" source="empezar_comer2" target="comiendo2">
@@ -596,7 +596,7 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="800" y="321" curvePoint="false"/>
+<arcpath id="000" x="801" y="321" curvePoint="false"/>
 <arcpath id="001" x="770" y="279" curvePoint="false"/>
 <type value="normal"/>
 </arc>
@@ -623,7 +623,7 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="196" y="292" curvePoint="false"/>
-<arcpath id="001" x="165" y="322" curvePoint="false"/>
+<arcpath id="001" x="166" y="322" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="P11 to T6" source="pensando5" target="empezar_comer5">
@@ -639,7 +639,7 @@
 <arcpath id="001" x="231" y="331" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="P13 to empezar_comer5" source="tenedor 4" target="empezar_comer5">
+<arc id="P13 to empezar_comer5" source="tenedor 5" target="empezar_comer5">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -649,7 +649,7 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="254" y="507" curvePoint="false"/>
-<arcpath id="001" x="270" y="419" curvePoint="false"/>
+<arcpath id="001" x="271" y="420" curvePoint="false"/>
 <arcpath id="002" x="241" y="332" curvePoint="false"/>
 <type value="normal"/>
 </arc>
@@ -662,7 +662,7 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="422" y="525" curvePoint="false"/>
+<arcpath id="000" x="423" y="524" curvePoint="false"/>
 <arcpath id="001" x="391" y="482" curvePoint="false"/>
 <type value="normal"/>
 </arc>
@@ -675,7 +675,7 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="338" y="545" curvePoint="false"/>
+<arcpath id="000" x="339" y="545" curvePoint="false"/>
 <arcpath id="001" x="382" y="577" curvePoint="false"/>
 <type value="normal"/>
 </arc>
@@ -688,7 +688,7 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="578" y="546" curvePoint="false"/>
+<arcpath id="000" x="579" y="545" curvePoint="false"/>
 <arcpath id="001" x="622" y="577" curvePoint="false"/>
 <type value="normal"/>
 </arc>
@@ -701,11 +701,11 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="662" y="525" curvePoint="false"/>
+<arcpath id="000" x="663" y="524" curvePoint="false"/>
 <arcpath id="001" x="631" y="482" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="P7 to T2" source="tenedor2" target="empezar_comer3">
+<arc id="P7 to T2" source="tenedor3" target="empezar_comer3">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -715,7 +715,7 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="738" y="524" curvePoint="false"/>
-<arcpath id="001" x="702" y="472" curvePoint="false"/>
+<arcpath id="001" x="703" y="473" curvePoint="false"/>
 <arcpath id="002" x="632" y="472" curvePoint="false"/>
 <type value="normal"/>
 </arc>
@@ -728,7 +728,7 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="527" y="164" curvePoint="false"/>
+<arcpath id="000" x="528" y="164" curvePoint="false"/>
 <arcpath id="001" x="496" y="122" curvePoint="false"/>
 <type value="normal"/>
 </arc>
@@ -780,8 +780,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="235" y="321" curvePoint="false"/>
-<arcpath id="001" x="215" y="293" curvePoint="false"/>
+<arcpath id="000" x="236" y="321" curvePoint="false"/>
+<arcpath id="001" x="215" y="294" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T7 to P11" source="terminar_comer5" target="pensando5">
@@ -807,7 +807,7 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="392" y="577" curvePoint="false"/>
-<arcpath id="001" x="422" y="547" curvePoint="false"/>
+<arcpath id="001" x="421" y="547" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="T9 to P15" source="empezar_comer4" target="comiendo4">
@@ -823,7 +823,7 @@
 <arcpath id="001" x="337" y="526" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="tenedor0 to empezar_comer1" source="tenedor0" target="empezar_comer1">
+<arc id="tenedor0 to empezar_comer1" source="tenedor1" target="empezar_comer1">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -832,12 +832,12 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="376" y="162" curvePoint="false"/>
-<arcpath id="001" x="393" y="114" curvePoint="false"/>
+<arcpath id="000" x="377" y="162" curvePoint="false"/>
+<arcpath id="001" x="394" y="115" curvePoint="false"/>
 <arcpath id="002" x="487" y="112" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="tenedor0 to empezar_comer5" source="tenedor0" target="empezar_comer5">
+<arc id="tenedor0 to empezar_comer5" source="tenedor1" target="empezar_comer5">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -847,11 +847,11 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="368" y="191" curvePoint="false"/>
-<arcpath id="001" x="350" y="275" curvePoint="false"/>
+<arcpath id="001" x="351" y="276" curvePoint="false"/>
 <arcpath id="002" x="251" y="327" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="tenedor1 to empezar_comer2" source="tenedor1" target="empezar_comer2">
+<arc id="tenedor1 to empezar_comer2" source="tenedor2" target="empezar_comer2">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -861,11 +861,11 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="626" y="177" curvePoint="false"/>
-<arcpath id="001" x="811" y="179" curvePoint="false"/>
-<arcpath id="002" x="810" y="322" curvePoint="false"/>
+<arcpath id="001" x="812" y="180" curvePoint="false"/>
+<arcpath id="002" x="811" y="322" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="tenedor1 to empezarcomer1" source="tenedor1" target="empezar_comer1">
+<arc id="tenedor1 to empezarcomer1" source="tenedor2" target="empezar_comer1">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -875,11 +875,11 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="604" y="164" curvePoint="false"/>
-<arcpath id="001" x="573" y="113" curvePoint="false"/>
+<arcpath id="001" x="574" y="114" curvePoint="false"/>
 <arcpath id="002" x="497" y="112" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="tenedor2 to empezar_comer2" source="tenedor2" target="empezar_comer2">
+<arc id="tenedor2 to empezar_comer2" source="tenedor3" target="empezar_comer2">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -888,12 +888,12 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="754" y="524" curvePoint="false"/>
-<arcpath id="001" x="815" y="429" curvePoint="false"/>
+<arcpath id="000" x="755" y="524" curvePoint="false"/>
+<arcpath id="001" x="816" y="430" curvePoint="false"/>
 <arcpath id="002" x="811" y="332" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="tenedor3 to empezar_comer3" source="tenedor3" target="empezar_comer3">
+<arc id="tenedor3 to empezar_comer3" source="tenedor4" target="empezar_comer3">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -902,12 +902,12 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="500" y="509" curvePoint="false"/>
-<arcpath id="001" x="527" y="474" curvePoint="false"/>
+<arcpath id="000" x="501" y="510" curvePoint="false"/>
+<arcpath id="001" x="528" y="475" curvePoint="false"/>
 <arcpath id="002" x="622" y="472" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="tenedor3 to empezar_comer4" source="tenedor3" target="empezar_comer4">
+<arc id="tenedor3 to empezar_comer4" source="tenedor4" target="empezar_comer4">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -916,12 +916,12 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="484" y="508" curvePoint="false"/>
-<arcpath id="001" x="467" y="471" curvePoint="false"/>
+<arcpath id="000" x="485" y="508" curvePoint="false"/>
+<arcpath id="001" x="468" y="472" curvePoint="false"/>
 <arcpath id="002" x="392" y="472" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="tenedor 4 to empezar_comer4" source="tenedor 4" target="empezar_comer4">
+<arc id="tenedor 4 to empezar_comer4" source="tenedor 5" target="empezar_comer4">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -930,12 +930,12 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="262" y="510" curvePoint="false"/>
-<arcpath id="001" x="297" y="473" curvePoint="false"/>
+<arcpath id="000" x="262" y="511" curvePoint="false"/>
+<arcpath id="001" x="298" y="474" curvePoint="false"/>
 <arcpath id="002" x="382" y="472" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="terminar_comer1 to tenedor0" source="terminar_comer1" target="tenedor0">
+<arc id="terminar_comer1 to tenedor0" source="terminar_comer1" target="tenedor1">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -945,8 +945,8 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="486" y="242" curvePoint="false"/>
-<arcpath id="001" x="414" y="243" curvePoint="false"/>
-<arcpath id="002" x="379" y="189" curvePoint="false"/>
+<arcpath id="001" x="415" y="244" curvePoint="false"/>
+<arcpath id="002" x="380" y="189" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 <arc id="terminar_comer2 to pensando2" source="terminar_comer2" target="pensando2">
@@ -962,7 +962,7 @@
 <arcpath id="001" x="753" y="359" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="terminar_comer2 to tenedor1" source="terminar_comer2" target="tenedor1">
+<arc id="terminar_comer2 to tenedor1" source="terminar_comer2" target="tenedor2">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -972,11 +972,11 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="716" y="327" curvePoint="false"/>
-<arcpath id="001" x="607" y="275" curvePoint="false"/>
+<arcpath id="001" x="608" y="276" curvePoint="false"/>
 <arcpath id="002" x="611" y="191" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="terminar_comer2 to tenedor2" source="terminar_comer2" target="tenedor2">
+<arc id="terminar_comer2 to tenedor2" source="terminar_comer2" target="tenedor3">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -986,11 +986,11 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="726" y="331" curvePoint="false"/>
-<arcpath id="001" x="709" y="427" curvePoint="false"/>
+<arcpath id="001" x="710" y="428" curvePoint="false"/>
 <arcpath id="002" x="742" y="522" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="terminar_comer3 to tenedor2" source="terminar_comer3" target="tenedor2">
+<arc id="terminar_comer3 to tenedor2" source="terminar_comer3" target="tenedor3">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -1000,11 +1000,11 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="631" y="587" curvePoint="false"/>
-<arcpath id="001" x="747" y="586" curvePoint="false"/>
-<arcpath id="002" x="747" y="552" curvePoint="false"/>
+<arcpath id="001" x="748" y="587" curvePoint="false"/>
+<arcpath id="002" x="747" y="551" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="terminar_comer3 to tenedor3" source="terminar_comer3" target="tenedor3">
+<arc id="terminar_comer3 to tenedor3" source="terminar_comer3" target="tenedor4">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -1014,11 +1014,11 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="621" y="587" curvePoint="false"/>
-<arcpath id="001" x="516" y="586" curvePoint="false"/>
-<arcpath id="002" x="497" y="535" curvePoint="false"/>
+<arcpath id="001" x="517" y="587" curvePoint="false"/>
+<arcpath id="002" x="497" y="536" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="terminar_comer4 to tenedor3" source="terminar_comer4" target="tenedor3">
+<arc id="terminar_comer4 to tenedor3" source="terminar_comer4" target="tenedor4">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -1028,11 +1028,11 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="391" y="587" curvePoint="false"/>
-<arcpath id="001" x="473" y="586" curvePoint="false"/>
+<arcpath id="001" x="474" y="587" curvePoint="false"/>
 <arcpath id="002" x="487" y="536" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="terminar_comer4 to tenedor 4" source="terminar_comer4" target="tenedor 4">
+<arc id="terminar_comer4 to tenedor 4" source="terminar_comer4" target="tenedor 5">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -1042,11 +1042,11 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="381" y="587" curvePoint="false"/>
-<arcpath id="001" x="254" y="586" curvePoint="false"/>
+<arcpath id="001" x="255" y="587" curvePoint="false"/>
 <arcpath id="002" x="252" y="536" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="terminar_comer5 to P13" source="terminar_comer5" target="tenedor 4">
+<arc id="terminar_comer5 to P13" source="terminar_comer5" target="tenedor 5">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -1056,11 +1056,11 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="156" y="331" curvePoint="false"/>
-<arcpath id="001" x="150" y="469" curvePoint="false"/>
+<arcpath id="001" x="151" y="470" curvePoint="false"/>
 <arcpath id="002" x="238" y="515" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="terminar_comer5 to tenedor0" source="terminar_comer5" target="tenedor0">
+<arc id="terminar_comer5 to tenedor0" source="terminar_comer5" target="tenedor1">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -1069,8 +1069,8 @@
 <tagged>
 <value>false</value>
 </tagged>
-<arcpath id="000" x="155" y="321" curvePoint="false"/>
-<arcpath id="001" x="157" y="179" curvePoint="false"/>
+<arcpath id="000" x="156" y="321" curvePoint="false"/>
+<arcpath id="001" x="158" y="180" curvePoint="false"/>
 <arcpath id="002" x="357" y="177" curvePoint="false"/>
 <type value="normal"/>
 </arc>
@@ -1084,10 +1084,10 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="497" y="232" curvePoint="false"/>
-<arcpath id="001" x="527" y="189" curvePoint="false"/>
+<arcpath id="001" x="528" y="189" curvePoint="false"/>
 <type value="normal"/>
 </arc>
-<arc id="terminarcomer1 to tenedor1" source="terminar_comer1" target="tenedor1">
+<arc id="terminarcomer1 to tenedor1" source="terminar_comer1" target="tenedor2">
 <graphics/>
 <inscription>
 <value>Default,1</value>
@@ -1097,8 +1097,8 @@
 <value>false</value>
 </tagged>
 <arcpath id="000" x="496" y="242" curvePoint="false"/>
-<arcpath id="001" x="567" y="237" curvePoint="false"/>
-<arcpath id="002" x="602" y="188" curvePoint="false"/>
+<arcpath id="001" x="568" y="238" curvePoint="false"/>
+<arcpath id="002" x="603" y="189" curvePoint="false"/>
 <type value="normal"/>
 </arc>
 </net>
