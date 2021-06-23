@@ -15,21 +15,6 @@ struct Transicion {
     orden : usize
 }
 
-/*
-/// Arco que van de una plaza P a transicion T
-#[derive(Debug)]
-struct ArcoPre {
-    plaza : Plaza,
-    transicion : Transicion
-}
-
-/// Arco que van de una transicion T a una plaza P
-#[derive(Debug)]
-struct ArcoPost {
-    transicion : Transicion,
-    plaza : Plaza
-}*/
-
 /// Arco que va de una plaza P a una transicion T o viceversa
 #[derive(Debug, Clone)]
 struct Arco {
@@ -37,8 +22,7 @@ struct Arco {
     transicion : Transicion
 }
 
-//define place piensa1,piensa2,,,piensan;    //esta es la instruccion de definicion de plazas
-/// Crea todas las plazas de la RdP a partir de los nombres de cada una.
+/// Instruccion de definicion de plazas, crea todas las plazas de la RdP a partir de los nombres de cada una.
 #[macro_export]
 macro_rules! place {
     ($($plaza: ident{$name: expr}),+) => {
@@ -52,8 +36,8 @@ macro_rules! place {
     };
 }
 
-//define trans empieza1,empieza2,,,,empiezan, comiendo1,,,comiendon;   // esta es la instruccion de definicion de transiciones
-/// Crea todas las transiciones de la RdP a partir de los nombres de cada una.
+/// Instruccion de definicion de transiciones, crea todas las transiciones de la RdP 
+/// a partir de los nombres de cada una.
 #[macro_export]
 macro_rules! transition {
     ($($transicion: ident{$name: expr}),+) => {
@@ -68,7 +52,8 @@ macro_rules! transition {
 }
 
 
-//define arc piensa1 to empieza1, comiendo1 to piensa1;  // esta es la instruccion de definicion de arcos
+/// Instruccion de definicion de arcos post.
+/// Son los arcos que van de transiciones a plazas.
 #[macro_export]
 macro_rules! arc_pre {
     ($($p:ident to $t:ident),+) => {
@@ -84,7 +69,8 @@ macro_rules! arc_pre {
 
 }
 
-//define arc piensa1 to empieza1, comiendo1 to piensa1;  // esta es la instruccion de definicion de arcos
+/// Instruccion de definicion de arcos pre (arc piensa1 to empieza1, comiendo1 to piensa1)
+/// Son los arcos que van de plazas a transiciones.
 #[macro_export]
 macro_rules! arc_post {
     ($($t:ident to $p:ident),+) => {
@@ -99,6 +85,7 @@ macro_rules! arc_post {
     };
 }
 
+/// Actualiza la lista de transiciones que estan sensibilizadas.
 #[macro_export]
 macro_rules! update_enabled {
     ($plazas: ident $transiciones: ident $arco : ident) => {
@@ -106,11 +93,6 @@ macro_rules! update_enabled {
             $transiciones[i].is_sensibilizada = true;
         }
 
-        // for i in (0..$arco.len()){
-        //     if($arco[i].plaza.num_tokens < 1){
-        //         arco[i].transicion.is_sensibilizada = false;
-        //     }
-        // }
         for i in (0..$arco.len()){
             if($plazas[$arco[i].plaza.orden].num_tokens < 1){
                 $transiciones[$arco[i].transicion.orden].is_sensibilizada = false;
@@ -119,6 +101,7 @@ macro_rules! update_enabled {
     }
 }
 
+/// Imprime el marcado actual, es decir, la cantidad de tokens que tiene cada plaza.
 #[macro_export]
 macro_rules! list_marc {
     ($plazas: ident) => {
@@ -132,6 +115,7 @@ macro_rules! list_marc {
 
 }
 
+/// Imprime las transiciones que esten sensibilizadas.
 #[macro_export]
 macro_rules! print_transitions_enabled {
     ($transiciones: ident) => {
@@ -147,6 +131,7 @@ macro_rules! print_transitions_enabled {
 
 }
 
+/// Devuelve en un vector las transiciones que estan sensibilizadas.
 #[macro_export]
 macro_rules! list_enabled {
     ($transiciones: ident) => {
@@ -162,7 +147,7 @@ macro_rules! list_enabled {
     }
 }
 
-//define init piensa1{1},,,piensan{0}   // definicion del marcado inicial donde {n} indican la cantidad de tokens en la plaza respectiva
+/// Define el marcado inicial de las plazas donde {n} indican la cantidad de tokens en la plaza respectiva.
 #[macro_export]
 macro_rules! init {
     ($($plaza: ident{$num: expr}),+) => {
@@ -174,12 +159,7 @@ macro_rules! init {
     };
 }
 
-//ver transiciones sensibilizadas
-//elegir una al azar
-//quitar 1 token en plaza de arcos pre
-//sumar 1 token en plaza de arcos post
-
-//fire any  // dispara una transicion aleatoria
+/// Dispara una transicion aleatoria de las que esten sensibilizadas.
 #[macro_export]
 macro_rules! fire_any {
     ($plazas: ident, $transiciones: ident, $arc_pre : ident, $arc_post : ident) => {
@@ -188,7 +168,6 @@ macro_rules! fire_any {
             let sensibilizadas = list_enabled!(vec_trans);
             // Generate random number in the range [0, n)
             let num_trans = rand::thread_rng().gen_range(0..sensibilizadas.len());
-            //println!("NUM ALEATORIO: {:?}", num_trans);
             let plazas = &mut $plazas;
             let arc_pre = &$arc_pre;
             let arc_post = &$arc_post;
@@ -202,23 +181,10 @@ macro_rules! fire_any {
 
 /// Dispara una transicion. Saca un token de cada plaza de entrada a la transicion y
 /// agrega un token en cada plaza de salida.
-/// El matcheo es viendo el nombre de las plazas y transicion.
 #[macro_export]
 macro_rules! fire_transition {
     ($plazas: ident, $transicion: ident, $arc_pres : ident, $arc_post : ident) => {
         {
-            // for i in (0..$arc_pres.len()){
-            //     if $arc_pres[i].transicion.nombre == $transicion.nombre {
-            //         for j in (0..$plazas.len()){
-            //             if $arc_pres[i].plaza.nombre == $plazas[j].nombre {
-            //                 $plazas[j].num_tokens -= 1;
-            //                 println!("saco en plaza {}", $plazas[j].nombre);
-            //                 break;
-            //             }
-            //         }
-            //     }
-            // }
-
             //saca un token de todas las plazas de entrada a la transicion
             for i in (0..$arc_pres.len()){
                 if ($arc_pres[i].transicion.nombre == $transicion.nombre) {
@@ -227,18 +193,6 @@ macro_rules! fire_transition {
                     //println!("saco en plaza {}", $plazas[iplaza].nombre);
                 }
             }
-
-            // for k in (0..$arc_post.len()){
-            //     if $arc_post[k].transicion.nombre == $transicion.nombre {
-            //         for l in (0..$plazas.len()){
-            //             if $arc_post[k].plaza.nombre == $plazas[l].nombre {
-            //                 $plazas[l].num_tokens += 1;
-            //                 println!("pongo en plaza {}", $plazas[l].nombre);
-            //                 break;
-            //             }
-            //         }
-            //     }
-            // }
             
             //agrega un token en c/u de las plazas de salida de la transicion
             for k in (0..$arc_post.len()){
@@ -253,7 +207,7 @@ macro_rules! fire_transition {
     };
 }
 
-//fire all   // dispara todas la transiciones que esten habilitadas en ese momento
+/// Dispara todas la transiciones que esten habilitadas en ese momento.
 #[macro_export]
 macro_rules! fire_all {
     ($plazas: ident, $transiciones: ident, $arc_pre : ident, $arc_post : ident) => {
@@ -267,12 +221,13 @@ macro_rules! fire_all {
                 }
                 update_enabled!($plazas $transiciones $arc_pre);
             }
-
         }
-
     };
 }
 
+/// Dispara la transicion empezar_comer de un filosofo especificado
+/// Imprime un error en caso de que no exista tal filosofo o que dicha
+/// transicion no este sensibilizada.
 #[macro_export]
 macro_rules! fire_empieza {
     ($plazas: ident, $transiciones: ident, $arc_pre : ident, $arc_post : ident, $num : expr) => {
@@ -343,14 +298,12 @@ fn main() {
                                 tenedor3 to empezar_comer3, tenedor4 to empezar_comer3, pensando3 to empezar_comer3, comiendo3 to terminar_comer3,
                                 tenedor4 to empezar_comer4, tenedor5 to empezar_comer4, pensando4 to empezar_comer4, comiendo4 to terminar_comer4,
                                 tenedor5 to empezar_comer5, tenedor1 to empezar_comer5, pensando5 to empezar_comer5, comiendo5 to terminar_comer5);
-   // println!("{:?}", arcos_pre);
 
     let mut arcos_post = arc_post!(terminar_comer1 to tenedor1, terminar_comer1 to tenedor2, terminar_comer1 to pensando1, empezar_comer1 to comiendo1,
                                 terminar_comer2 to tenedor2, terminar_comer2 to tenedor3, terminar_comer2 to pensando2, empezar_comer2 to comiendo2,
                                 terminar_comer3 to tenedor3, terminar_comer3 to tenedor4, terminar_comer3 to pensando3, empezar_comer3 to comiendo3,
                                 terminar_comer4 to tenedor4, terminar_comer4 to tenedor5, terminar_comer4 to pensando4, empezar_comer4 to comiendo4,
                                 terminar_comer5 to tenedor5, terminar_comer5 to tenedor1, terminar_comer5 to pensando5, empezar_comer5 to comiendo5);
-  // println!("{:?}", arcos_post);
 
     // MARCADO INICIAL
     init!(pensando1{1}, pensando2{1}, pensando3{1}, pensando4{1}, pensando5{1}, 
@@ -363,22 +316,12 @@ fn main() {
                               comiendo1, comiendo2, comiendo3, comiendo4, comiendo5, 
                               tenedor1, tenedor2, tenedor3, tenedor4, tenedor5];
 
-   /* for item in &vec_plazas {
-        println!("{:?}", item);
-    }*/
-
     let mut vec_transiciones = vec![empezar_comer1, empezar_comer2, empezar_comer3, empezar_comer4, empezar_comer5,
                                     terminar_comer1, terminar_comer2, terminar_comer3, terminar_comer4, terminar_comer5];
 
-    /*for item in &vec_transiciones {
-        println!("{:?}", item);
-    }*/
     
-    //print_transitions_enabled!(vec_transiciones);
     update_enabled!(vec_plazas vec_transiciones arcos_pre);
     
-
-
 
     //Interaccion con el usuario - recepcion de comandos
     println!("\x1b[1;36m\n >> Bienvenidos a Petri Net Simulator << \x1b[0;37m");
@@ -405,8 +348,8 @@ fn main() {
            let mut input_comando = String::new();
            let mut num_filosofo = String::new();
            io::stdin().read_line(&mut input_comando).ok().expect("Error al leer de teclado");
-          // println!("El comando es {}", input_comando.trim()); //trim quita el \n final 
-           match input_comando.trim() {
+   
+           match input_comando.trim() { //trim quita el \n final 
                "1" => {
                     print!("Ingrese el número del filosofo: ");
                     io::stdout().flush().ok();
@@ -422,6 +365,5 @@ fn main() {
                _ => println!("\x1b[1;31m Opcion incorrecta \x1b[0;37m")
            }
     }
-
 
 }
