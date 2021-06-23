@@ -261,6 +261,28 @@ macro_rules! fire_all {
     };
 }
 
+#[macro_export]
+macro_rules! fire_empieza {
+    ($plazas: ident, $transiciones: ident, $arc_pre : ident, $arc_post : ident) => {
+        {
+            let mut b : bool = true;
+            for i in (0..4){
+                if($transiciones[i].is_sensibilizada){
+                    b = false;
+                    let t = $transiciones[i].clone();
+                    fire_transition!($plazas, t, $arc_pre, $arc_post);
+                    update_enabled!($plazas $transiciones $arc_pre);
+                    break;
+                }
+            }
+            if(b){
+                println!("No se encontro ninguna transicion empieza");
+            }
+
+        }
+
+    };
+}
 
 fn main() {
     //creacion e inicializacion de la RdP
@@ -356,6 +378,7 @@ fn main() {
    list_enabled!(vec_transiciones);
 
    fire_all!(vec_plazas, vec_transiciones, arcos_pre, arcos_post);
+   fire_empieza!(vec_plazas, vec_transiciones, arcos_pre, arcos_post);
 
 
 
