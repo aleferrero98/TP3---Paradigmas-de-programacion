@@ -122,8 +122,26 @@ macro_rules! update_enabled {
 #[macro_export]
 macro_rules! list_marc {
     ($plazas: ident) => {
-        for plaza in &$plazas{
-            println!("Plaza {} {}",plaza.nombre, plaza.num_tokens)
+        {
+            println!("\x1b[1;34mMarcado actual:\x1b[0;37m");
+            for plaza in &$plazas{
+                println!(" > Plaza {}: {} tokens",plaza.nombre, plaza.num_tokens)
+            }
+        }
+    }
+
+}
+
+#[macro_export]
+macro_rules! print_transitions_enabled {
+    ($transiciones: ident) => {
+        {
+            let transiciones = &$transiciones;
+            let vec_sensibilizadas = list_enabled!(transiciones);
+            println!("\x1b[1;34mTransiciones Sensibilizadas:\x1b[0;37m");
+            for transicion in &vec_sensibilizadas{
+                println!(" > Transicion {}", transicion.nombre);
+            }
         }
     }
 
@@ -131,16 +149,6 @@ macro_rules! list_marc {
 
 #[macro_export]
 macro_rules! list_enabled {
-    ($transiciones: ident) => {
-        for transicion in &$transiciones{
-            println!("Transicion {} {}",transicion.nombre, if(transicion.is_sensibilizada){"-> sensibilizada"}else{"-> no sensibilizada"})
-        }
-    }
-
-}
-
-#[macro_export]
-macro_rules! list_enabled2 {
     ($transiciones: ident) => {
         {
             let mut vec_sensibilizadas : Vec<Transicion> = Vec::new();
@@ -177,15 +185,16 @@ macro_rules! fire_any {
     ($plazas: ident, $transiciones: ident, $arc_pre : ident, $arc_post : ident) => {
         {
             let vec_trans = &$transiciones;
-            let sensibilizadas = list_enabled2!(vec_trans);
+            let sensibilizadas = list_enabled!(vec_trans);
             // Generate random number in the range [0, n)
             let num_trans = rand::thread_rng().gen_range(0..sensibilizadas.len());
-            println!("NUM ALEATORIO: {:?}", num_trans);
+            //println!("NUM ALEATORIO: {:?}", num_trans);
             let plazas = &mut $plazas;
             let arc_pre = &$arc_pre;
             let arc_post = &$arc_post;
             let trans_a_disparar = sensibilizadas[num_trans].clone();
             fire_transition!(plazas, trans_a_disparar, arc_pre, arc_post); 
+            update_enabled!($plazas $transiciones $arc_pre);
         }
 
     };
@@ -209,11 +218,13 @@ macro_rules! fire_transition {
             //         }
             //     }
             // }
+
+            //saca un token de todas las plazas de entrada a la transicion
             for i in (0..$arc_pres.len()){
                 if ($arc_pres[i].transicion.nombre == $transicion.nombre) {
                     let iplaza = $arc_pres[i].plaza.orden;
                     $plazas[iplaza].num_tokens -= 1;
-                    println!("saco en plaza {}", $plazas[iplaza].nombre);
+                    //println!("saco en plaza {}", $plazas[iplaza].nombre);
                 }
             }
 
@@ -228,15 +239,16 @@ macro_rules! fire_transition {
             //         }
             //     }
             // }
-
+            
+            //agrega un token en c/u de las plazas de salida de la transicion
             for k in (0..$arc_post.len()){
                 if $arc_post[k].transicion.nombre == $transicion.nombre {
                     let iplaza = $arc_pres[k].plaza.orden;
                     $plazas[iplaza].num_tokens += 1;
-                    println!("pongo en plaza {}", $plazas[iplaza].nombre);
+                    //println!("pongo en plaza {}", $plazas[iplaza].nombre);
                 }
             }
-            println!("Se disparo la transicion {}", $transicion.nombre);
+            println!("\x1b[3;32m Se disparo la transicion {}\x1b[0;37m", $transicion.nombre);
         }
     };
 }
@@ -247,7 +259,7 @@ macro_rules! fire_all {
     ($plazas: ident, $transiciones: ident, $arc_pre : ident, $arc_post : ident) => {
         {
             let vec_trans = &$transiciones;
-            let sensibilizadas = list_enabled2!(vec_trans);
+            let sensibilizadas = list_enabled!(vec_trans);
             for i in (0..sensibilizadas.len()){ 
                 let t = sensibilizadas[i].clone();
                 if($transiciones[t.orden].is_sensibilizada == true){
@@ -263,24 +275,21 @@ macro_rules! fire_all {
 
 #[macro_export]
 macro_rules! fire_empieza {
-    ($plazas: ident, $transiciones: ident, $arc_pre : ident, $arc_post : ident) => {
+    ($plazas: ident, $transiciones: ident, $arc_pre : ident, $arc_post : ident, $num : expr) => {
         {
-            let mut b : bool = true;
-            for i in (0..4){
-                if($transiciones[i].is_sensibilizada){
-                    b = false;
-                    let t = $transiciones[i].clone();
+            if($num > 0 && $num < 6){
+                let n : usize = ($num - 1);
+                if($transiciones[n].is_sensibilizada){
+                    let t = $transiciones[n].clone();
                     fire_transition!($plazas, t, $arc_pre, $arc_post);
                     update_enabled!($plazas $transiciones $arc_pre);
-                    break;
+                } else{
+                    println!("\x1b[1;33m No está sensibilizada la transicion {}\x1b[0;37m", $transiciones[n].nombre);
                 }
+            } else {
+                println!("\x1b[1;31m El número de Filosofo incorrecto. Debe ser entre 1 y 5.\x1b[0;37m");
             }
-            if(b){
-                println!("No se encontro ninguna transicion empieza");
-            }
-
         }
-
     };
 }
 
@@ -334,15 +343,16 @@ fn main() {
                                 tenedor3 to empezar_comer3, tenedor4 to empezar_comer3, pensando3 to empezar_comer3, comiendo3 to terminar_comer3,
                                 tenedor4 to empezar_comer4, tenedor5 to empezar_comer4, pensando4 to empezar_comer4, comiendo4 to terminar_comer4,
                                 tenedor5 to empezar_comer5, tenedor1 to empezar_comer5, pensando5 to empezar_comer5, comiendo5 to terminar_comer5);
-    println!("{:?}", arcos_pre);
+   // println!("{:?}", arcos_pre);
 
     let mut arcos_post = arc_post!(terminar_comer1 to tenedor1, terminar_comer1 to tenedor2, terminar_comer1 to pensando1, empezar_comer1 to comiendo1,
                                 terminar_comer2 to tenedor2, terminar_comer2 to tenedor3, terminar_comer2 to pensando2, empezar_comer2 to comiendo2,
                                 terminar_comer3 to tenedor3, terminar_comer3 to tenedor4, terminar_comer3 to pensando3, empezar_comer3 to comiendo3,
                                 terminar_comer4 to tenedor4, terminar_comer4 to tenedor5, terminar_comer4 to pensando4, empezar_comer4 to comiendo4,
                                 terminar_comer5 to tenedor5, terminar_comer5 to tenedor1, terminar_comer5 to pensando5, empezar_comer5 to comiendo5);
-    println!("{:?}", arcos_post);
+  // println!("{:?}", arcos_post);
 
+    // MARCADO INICIAL
     init!(pensando1{1}, pensando2{1}, pensando3{1}, pensando4{1}, pensando5{1}, 
           comiendo1{0}, comiendo2{0}, comiendo3{0}, comiendo4{0}, comiendo5{0}, 
           tenedor1{1}, tenedor2{1}, tenedor3{1}, tenedor4{1}, tenedor5{1}); 
@@ -353,63 +363,65 @@ fn main() {
                               comiendo1, comiendo2, comiendo3, comiendo4, comiendo5, 
                               tenedor1, tenedor2, tenedor3, tenedor4, tenedor5];
 
-    for item in &vec_plazas {
+   /* for item in &vec_plazas {
         println!("{:?}", item);
-    }
+    }*/
 
     let mut vec_transiciones = vec![empezar_comer1, empezar_comer2, empezar_comer3, empezar_comer4, empezar_comer5,
                                     terminar_comer1, terminar_comer2, terminar_comer3, terminar_comer4, terminar_comer5];
 
-    for item in &vec_transiciones {
+    /*for item in &vec_transiciones {
         println!("{:?}", item);
-    }
+    }*/
     
-    list_enabled!(vec_transiciones);
+    //print_transitions_enabled!(vec_transiciones);
     update_enabled!(vec_plazas vec_transiciones arcos_pre);
-    list_enabled!(vec_transiciones);
-    list_marc!(vec_plazas);
-
-
-    fire_any!(vec_plazas, vec_transiciones, arcos_pre, arcos_post);
-
-   /*let t = vec_transiciones[0].clone();
-   fire_transition!(vec_plazas, t, arcos_pre, arcos_post);*/
-   update_enabled!(vec_plazas vec_transiciones arcos_pre);
-   list_enabled!(vec_transiciones);
-
-   fire_all!(vec_plazas, vec_transiciones, arcos_pre, arcos_post);
-   fire_empieza!(vec_plazas, vec_transiciones, arcos_pre, arcos_post);
+    
 
 
 
     //Interaccion con el usuario - recepcion de comandos
-    let finalizo : bool = false;
-   // let mut input_comando = String::new();
-    println!("\x1b[1;36m >> Bienvenidos a Petri Net Simulator << \x1b[0;37m");
-    /*while !finalizo {
-           println!("Seleccione una acción a realizar");
-           println!(" 1) Disparar transicion empiezan");
-           println!(" 2) Disparar una transicion al azar");
-           println!(" 3) Disparar todas las transiciones habilitadas");
-           println!(" 4) Mostrar el marcado actual");
-           println!(" 5) Mostrar transiciones habilitadas");
-           println!(" 6) Finalizar");
+    println!("\x1b[1;36m\n >> Bienvenidos a Petri Net Simulator << \x1b[0;37m");
+    println!("{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}", 
+            "\x1b[3;37m'Cinco filósofos se sientan alrededor de una mesa y pasan su vida cenando y pensando.",
+            "Cada filósofo tiene un plato de fideos y un tenedor a la izquierda de su plato.",
+            "Para comer los fideos son necesarios dos tenedores y cada filósofo sólo puede tomar ",
+            "los que están a su izquierda y derecha. Si cualquier filósofo toma un tenedor ",
+            "y el otro está ocupado, se quedará esperando, con el tenedor en la mano, ",
+            "hasta que pueda tomar el otro tenedor, para luego empezar a comer.",
+            "Si dos filósofos adyacentes intentan tomar el mismo tenedor al mismo tiempo, ",
+            "ambos compiten por tomar el mismo tenedor, y uno de ellos se queda sin comer.'\x1b[0;37m");
+    loop {
+           println!("\n\x1b[1;37m\x1b[4;37mSeleccione una acción a realizar\x1b[0;37m");
+           println!("\x1b[1;37m 1)\x1b[0;37m Disparar transicion empiezan");
+           println!("\x1b[1;37m 2)\x1b[0;37m Disparar una transicion al azar");
+           println!("\x1b[1;37m 3)\x1b[0;37m Disparar todas las transiciones habilitadas");
+           println!("\x1b[1;37m 4)\x1b[0;37m Mostrar el marcado actual");
+           println!("\x1b[1;37m 5)\x1b[0;37m Mostrar transiciones habilitadas");
+           println!("\x1b[1;37m 6)\x1b[0;37m Finalizar");
            print!("{} >> ", '\u{1F980}');
            io::stdout().flush().ok();
 
            let mut input_comando = String::new();
+           let mut num_filosofo = String::new();
            io::stdin().read_line(&mut input_comando).ok().expect("Error al leer de teclado");
           // println!("El comando es {}", input_comando.trim()); //trim quita el \n final 
            match input_comando.trim() {
-               "1" => println!("uno"),
-               "2" => println!("dos"),
-               "3" => println!("tres"),
-               "4" => println!("cuatro"),
-               "5" => println!("cinco"),
+               "1" => {
+                    print!("Ingrese el número del filosofo: ");
+                    io::stdout().flush().ok();
+                    io::stdin().read_line(&mut num_filosofo).ok().expect("Error al leer de teclado");
+                    let nro = num_filosofo.trim().parse::<usize>().unwrap();
+                    fire_empieza!(vec_plazas, vec_transiciones, arcos_pre, arcos_post, nro);
+                },
+               "2" => {fire_any!(vec_plazas, vec_transiciones, arcos_pre, arcos_post);},
+               "3" => {fire_all!(vec_plazas, vec_transiciones, arcos_pre, arcos_post);},
+               "4" => {list_marc!(vec_plazas);},
+               "5" => {print_transitions_enabled!(vec_transiciones);},
                "6" => break,
                _ => println!("\x1b[1;31m Opcion incorrecta \x1b[0;37m")
            }
-    }*/
+    }
 
 
 }
