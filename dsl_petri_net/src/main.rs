@@ -52,8 +52,9 @@ macro_rules! transition {
 }
 
 
-/// Instruccion de definicion de arcos post.
-/// Son los arcos que van de transiciones a plazas.
+
+/// Instruccion de definicion de arcos pre (arc piensa1 to empieza1, comiendo1 to piensa1)
+/// Son los arcos que van de plazas a transiciones.
 #[macro_export]
 macro_rules! arc_pre {
     ($($p:ident to $t:ident),+) => {
@@ -69,8 +70,8 @@ macro_rules! arc_pre {
 
 }
 
-/// Instruccion de definicion de arcos pre (arc piensa1 to empieza1, comiendo1 to piensa1)
-/// Son los arcos que van de plazas a transiciones.
+/// Instruccion de definicion de arcos post.
+/// Son los arcos que van de transiciones a plazas.
 #[macro_export]
 macro_rules! arc_post {
     ($($t:ident to $p:ident),+) => {
@@ -275,17 +276,17 @@ fn main() {
            tenedor3{"tenedor3"}, tenedor4{"tenedor4"}, tenedor5{"tenedor5"}); 
 
     // TRANSICIONES
-    let mut empezar_comer1 : Transicion;
-    let mut empezar_comer2 : Transicion;
-    let mut empezar_comer3 : Transicion;
-    let mut empezar_comer4 : Transicion;
-    let mut empezar_comer5 : Transicion;
+    let empezar_comer1 : Transicion;
+    let empezar_comer2 : Transicion;
+    let empezar_comer3 : Transicion;
+    let empezar_comer4 : Transicion;
+    let empezar_comer5 : Transicion;
     
-    let mut terminar_comer1 : Transicion;
-    let mut terminar_comer2 : Transicion;
-    let mut terminar_comer3 : Transicion;
-    let mut terminar_comer4 : Transicion;
-    let mut terminar_comer5 : Transicion;
+    let terminar_comer1 : Transicion;
+    let terminar_comer2 : Transicion;
+    let terminar_comer3 : Transicion;
+    let terminar_comer4 : Transicion;
+    let terminar_comer5 : Transicion;
 
     transition!(empezar_comer1{"empezar_comer1"}, empezar_comer2{"empezar_comer2"}, empezar_comer3{"empezar_comer3"}, 
                 empezar_comer4{"empezar_comer4"}, empezar_comer5{"empezar_comer5"}, terminar_comer1{"terminar_comer1"}, 
@@ -293,13 +294,13 @@ fn main() {
                 terminar_comer5{"terminar_comer5"});
                                  
     // ARCOS
-    let mut arcos_pre = arc_pre!(tenedor1 to empezar_comer1, tenedor2 to empezar_comer1, pensando1 to empezar_comer1, comiendo1 to terminar_comer1,
+    let arcos_pre = arc_pre!(tenedor1 to empezar_comer1, tenedor2 to empezar_comer1, pensando1 to empezar_comer1, comiendo1 to terminar_comer1,
                                 tenedor2 to empezar_comer2, tenedor3 to empezar_comer2, pensando2 to empezar_comer2, comiendo2 to terminar_comer2,
                                 tenedor3 to empezar_comer3, tenedor4 to empezar_comer3, pensando3 to empezar_comer3, comiendo3 to terminar_comer3,
                                 tenedor4 to empezar_comer4, tenedor5 to empezar_comer4, pensando4 to empezar_comer4, comiendo4 to terminar_comer4,
                                 tenedor5 to empezar_comer5, tenedor1 to empezar_comer5, pensando5 to empezar_comer5, comiendo5 to terminar_comer5);
 
-    let mut arcos_post = arc_post!(terminar_comer1 to tenedor1, terminar_comer1 to tenedor2, terminar_comer1 to pensando1, empezar_comer1 to comiendo1,
+    let arcos_post = arc_post!(terminar_comer1 to tenedor1, terminar_comer1 to tenedor2, terminar_comer1 to pensando1, empezar_comer1 to comiendo1,
                                 terminar_comer2 to tenedor2, terminar_comer2 to tenedor3, terminar_comer2 to pensando2, empezar_comer2 to comiendo2,
                                 terminar_comer3 to tenedor3, terminar_comer3 to tenedor4, terminar_comer3 to pensando3, empezar_comer3 to comiendo3,
                                 terminar_comer4 to tenedor4, terminar_comer4 to tenedor5, terminar_comer4 to pensando4, empezar_comer4 to comiendo4,
